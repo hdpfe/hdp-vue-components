@@ -1,13 +1,14 @@
-### vue custom components for some Management System
+# vue custom components for some Management System
 
 
-#### Demo
+## Demo
 
-[script tag demo](https://hdpfe.github.io/examples/standalone.html)
-[npm install demo](https://hdpfe.github.io/examples/index.html)
+[script tag demo](https://hdpfe.github.io/hdp-vue-components/examples/standalone.html)
+
+[npm install demo](https://hdpfe.github.io/hdp-vue-components/examples/index.html)
 
 
-#### Usage
+## Usage
 
 ```
 <script src="hdp-vue-components.js"></script>
@@ -40,7 +41,7 @@ component objects can be invoked through hdpVueComponents as well,you can extend
 just see `./src/main.js`
 
 
-#### develop
+## develop
 
 ```
 npm run dev
