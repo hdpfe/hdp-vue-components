@@ -1,0 +1,487 @@
+<!doctype html>
+<html class="no-js fixed-layout" id="app-main">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>vue-components examples</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI">
+    <link rel="stylesheet" href="http://cdn.amazeui.org/amazeui/2.4.2/css/amazeui.min.css">
+    <style>
+        .am-panel {
+            border-color: #ccc;
+            padding: 6px 10px;
+        }
+        .am-panel > h2 {
+            padding-bottom: 10px;
+            border-bottom: solid 1px #ccc;
+        }
+        .hdp-dropdown-typeahead {
+            border: solid 1px #ccc
+        }
+    </style>
+</head>
+<body>
+    <header class="am-topbar am-topbar-inverse admin-header">
+        <div class="am-topbar-brand">
+            <strong>Amaze UI</strong> <small>vue-components examples</small>
+        </div>
+
+        <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only" data-am-collapse="{target: '#topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
+
+        <div class="am-collapse am-topbar-collapse" id="topbar-collapse">
+
+            <ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list">
+                <li><a href="javascript:;"><span class="am-icon-envelope-o"></span> 收件箱 <span class="am-badge am-badge-warning">5</span></a></li>
+                <li class="am-dropdown" data-am-dropdown>
+                    <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+                        <span class="am-icon-users"></span> 管理员 <span class="am-icon-caret-down"></span>
+                    </a>
+                    <ul class="am-dropdown-content">
+                        <li><a href="#"><span class="am-icon-user"></span> 资料</a></li>
+                        <li><a href="#"><span class="am-icon-cog"></span> 设置</a></li>
+                        <li><a href="#"><span class="am-icon-power-off"></span> 退出</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="am-cf admin-main" id="app" style="padding: 20px;">
+        
+        <h1>组件demo</h1>
+        
+        <div class="am-panel">
+            <h2>分页pagination</h2>
+            <div>
+                <p>点击自行处理逻辑</p>
+                <hdp-pagination :pagesize="6" :total="200" :cur="1"></hdp-pagination>
+            </div>
+            <div>
+                <p>点击页码直接跳转，依赖vue-router（否则<span style="color:red;">Failed to resolve directive: link (found in component: &lt;hdp-pagination&gt;)</span>）</p>
+                <hdp-pagination :pagesize="6" :total="10" :cur="1" :page-link="createLink"></hdp-pagination>
+            </div>
+        </div>
+    
+        <div class="am-panel">
+            <h2>弹窗modal</h2>
+            <div>
+                <button class="am-btn am-btn-default" type="button" v-on:click="showModal=true">open modal</button>
+                &nbsp;&nbsp;
+                <button class="am-btn am-btn-primary" type="button" v-on:click="clickAlert">open alert</button>
+                &nbsp;&nbsp;
+                <button class="am-btn am-btn-secondary" type="button" v-on:click="clickConfirm">open confirm</button>
+                &nbsp;&nbsp;
+                <button class="am-btn am-btn-success" type="button" v-on:click="clickDialog">open dialog</button>
+                &nbsp;&nbsp;
+
+            </div>
+
+            <hdp-modal :show.sync="showModal">
+                <div class="am-modal-hd" slot="header">modal header</div>
+                <div class="am-modal-bd" slot="body">hello</div>
+            </hdp-modal>
+
+            <hdp-alert :show.sync="showAlert" class-name="am-modal-sm" :msg="alertMsg" @alert.ok="clickAlertOK"></hdp-alert>
+
+            <hdp-confirm :show.sync="showConfirm" class-name="am-modal-sm" :msg="confirmMsg" @confirm.ok="clickConfirmOK" @confirm.cancel="clickConfirmCancel"></hdp-confirm>
+
+            <hdp-dialog :show.sync="showDialog" :msg="dialogMsg" @dialog.cancel="clickDialogCancel" @dialog.ok="clickDialogOK">
+                <label for="">username</label>
+                <input type="text" v-model="username">
+            </hdp-dialog>
+            <br>
+        </div>
+
+        <div class="am-panel">
+            <h2>下拉typeahead</h2>
+            <div class="am-form">
+
+                <label for="">普通下拉文本</label><br>
+                <hdp-ta-text :input-data.sync="textInput" :dropdown-data="listData"></hdp-ta-text><span>{{textInput}}</span>
+                
+                
+                <br><br>
+
+                <label for="">自定义下拉文本列表</label><br>
+                <hdp-ta-text :input-data.sync="textInput2" :config="textConfig"></hdp-ta-text><span>{{textInput2}}</span>
+
+                <br><br>
+
+                <label for="">普通下拉对象列表</label><br>
+                <hdp-ta-object
+                    :input-data.sync="objectInput"
+                    :config="objectConfig"
+                    :dropdown-data="listObject">
+                </hdp-ta-object>
+                <span>id:{{objectInput.id}},name:{{objectInput.name}}</span>
+
+                <br><br>
+
+                <label for="">自定义(ajax)下拉对象列表</label><br>
+                <hdp-ta-object
+                    :input-data.sync="objectInput2"
+                    :config="object2Config">
+                </hdp-ta-object>
+                <span>id:{{objectInput2.id}},name:{{objectInput2.name}}</span>
+            
+            </div>
+
+            <p>本着单一职责的原则，本来还想把ajax下拉也做成一个组件，但ajax库比较多样，就不做了</p>
+        </div>
+        
+        <div class="am-panel">
+            <h2>标签输入taginput</h2>
+            <div>
+                <label for="">文本输入</label>
+                <hdp-taginput :input-list.sync="tagList" :dropdown-data="listData"></hdp-taginput>
+            </div>
+
+            <div>
+                <label for="">自定义文本输入</label>
+                <hdp-taginput :input-list.sync="tagList2" :config="textConfig"></hdp-taginput>
+            </div>
+
+            <div>
+                <label for="">对象输入</label>
+                <hdp-taginput 
+                    type-ahead="object"
+                    :input-list.sync="tagList3"
+                    :dropdown-data="listObject">
+                </hdp-taginput>
+            </div>
+
+            <div>
+                <label for="">自定义(ajax)对象输入</label>
+                <hdp-taginput 
+                    type-ahead="object"
+                    :input-list.sync="tagList4"
+                    :config="objectConfig2">
+                </hdp-taginput>
+            </div>
+            <br>
+        </div>
+
+        <div class="am-panel">
+            <h2>日期选择datetimepickder</h2>
+            <p>{{ myDate1 | formatDate 'yyyy年MM月dd日,星期D hh:mm' }}</p>
+            <ul class="am-avg-sm-1 am-avg-md-3 am-margin am-padding am-text-center admin-content-list ">
+                <li>
+                    <hdp-date-time-picker v-bind:date-time.sync="myDate1"></hdp-date-time-picker>
+                </li>
+                <li>
+                    <hdp-date-time-picker v-bind:date-time.sync="myDate1" v-bind:show-time-picker="false"></hdp-date-time-picker>
+                </li>
+
+                <li>
+                    <hdp-date-time-picker v-bind:date-time.sync="myDate1" v-bind:show-date-picker="false"></hdp-date-time-picker>
+                </li>
+            </ul>
+            
+
+
+            <hdp-date-time-input v-bind:date-time.sync="myDate2"></hdp-date-time-input>
+
+
+            <hdp-date-time-input v-bind:date-time.sync="myDate2" date-only></hdp-date-time-input>
+
+
+            <hdp-date-time-input v-bind:date-time.sync="myDate2" time-only></hdp-date-time-input>
+        </div>
+    </div>
+    
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.3/vue.js"></script> -->
+    <script src="http://vuejs.org.cn/js/vue.js"></script>
+    <script src="../dist/hdp-vue-components.js"></script>
+
+    <script>
+        Vue.use(hdpVueComponents.components);
+
+        new Vue({
+            el: '#app',
+            data: {
+                version: Vue.version,
+                showModal: false,
+                showAlert: false,
+                showConfirm: false,
+                showDialog: false,
+                alertMsg: {
+                    title: 'alert',
+                    content: 'alert content'
+                },
+                confirmMsg: {
+                    title: 'confirm',
+                    content: 'alert content'
+                },
+                dialogMsg: {
+                    title: 'finish your message',
+                    confirmText: '提交'
+                },
+                username: 'hdp',
+                textInput: '',
+                textInput2: '',
+                textConfig: {
+                    // 邮件下拉
+                    listFun: function() {
+                        let data = ["@hudongpai.com", "@qq.com", "@163.com", "@outlook.com", "@gmail.com", "@hotmail.com"];
+                        let value = this.inputData;
+                        let index = value.indexOf('@');
+                        let host = '';
+                        if (index > -1) {
+                            host = value.slice(index);
+                            value = value.slice(0, index);
+                        }
+                        for (var i = data.length - 1; i >= 0; i--) {
+                            data[i] = value + data[i];
+                        }
+                        this.items = this.config.limit ? data.slice(0, this.config.limit)
+                            : data
+                        this.current = -1
+                    },
+                    alwaysHit: true
+                },
+                objectInput: {
+                    id: '',
+                    name: ''
+                },
+                objectConfig: {
+                    textName: 'name',    // 传入input的值属性名
+                    idName: 'id'         // 传入input的id属性名
+                },
+                // listObject数组元素必须有id与text属性
+                listObject: [
+                    {
+                        id: 1,
+                        text: 'joey',
+                        desc: 'a sb'
+                    },{
+                        id: 2,
+                        text: 'tom',
+                        desc: 'a man'
+                    },{
+                        id: 3,
+                        text: 'jame'
+                    }
+                ],
+                objectInput2: {
+                    id: '',
+                    name: ''
+                },
+                object2Config: {
+                    textName: 'name',
+                    idName: 'id',
+                    listFun: function() {
+                        this.loading = true;
+                        // setTimeout当ajax啦
+                        setTimeout(() => {
+                            this.loading = false;
+                            let text = this.inputData[this.config.textName];
+                            let resultList = [{
+                                id: 1,
+                                name: '11111111'
+                            },,{
+                                id: 2,
+                                name: '1222222222'
+                            },{
+                                id: 3,
+                                name: '123333'
+                            },{
+                                id: 4,
+                                name: '1234444444'
+                            },{
+                                id: 5,
+                                name: '123455555'
+                            }];
+
+                            let items = [];
+
+                            resultList.forEach((item) => {
+                                if (item.name.indexOf(text) >= 0) {
+                                    items.push({
+                                        id: item.id,
+                                        text: item.name
+                                    })
+                                }
+                            })
+
+                            this.items = items
+                            this.current = -1
+
+                        },500);
+                    }
+                },
+                tagList: [],
+                listData: ['abc','addd','asdgasd','asdfasge','gwesdf'],
+                tagList2: [],
+                textConfig: {
+                    // 邮件下拉
+                    listFun: function() {
+                        let data = ["@hudongpai.com", "@qq.com", "@163.com", "@outlook.com", "@gmail.com", "@hotmail.com"];
+                        let value = this.inputData;
+                        let index = value.indexOf('@');
+                        let host = '';
+                        if (index > -1) {
+                            host = value.slice(index);
+                            value = value.slice(0, index);
+                        }
+                        for (var i = data.length - 1; i >= 0; i--) {
+                            data[i] = value + data[i];
+                        }
+                        this.items = this.config.limit ? data.slice(0, this.config.limit)
+                            : data
+                        this.current = -1
+                    },
+                    alwaysHit: true
+                },
+                tagList3: [],
+                listObject: [
+                    {
+                        id: 1,
+                        text: 'joey',
+                        desc: 'a sb'
+                    },{
+                        id: 2,
+                        text: 'tom',
+                        desc: 'a man'
+                    },{
+                        id: 3,
+                        text: 'jame'
+                    }
+                ],
+                tagList4: [],
+                objectConfig2: {
+                    listFun: function() {
+                        this.loading = true;
+                        // setTimeout当ajax啦
+                        setTimeout(() => {
+                            this.loading = false;
+                            let text = this.inputData[this.config.textName];
+                            let resultList = [{
+                                id: 1,
+                                name: '11111111'
+                            },,{
+                                id: 2,
+                                name: '1222222222'
+                            },{
+                                id: 3,
+                                name: '123333'
+                            },{
+                                id: 4,
+                                name: '1234444444'
+                            },{
+                                id: 5,
+                                name: '123455555'
+                            }];
+
+                            let items = [];
+
+                            resultList.forEach((item) => {
+                                if (item.name.indexOf(text) >= 0) {
+                                    items.push({
+                                        id: item.id,
+                                        text: item.name
+                                    })
+                                }
+                            })
+
+                            this.items = items
+                            this.current = -1
+
+                        },500);
+                    }
+                },
+                myDate1: new Date('2010-1-3 4:5:6'),
+                myDateMin1: '2010-1-1 4:5:6',
+                myDateMax1: '2010-1-20 4:5:6',
+                myDate2: '2015-12-12 13:14',
+                myDateMin2: '2015-12-1 13:14:15',
+                myDateMax2: '2015-12-30 13:14:15'
+            
+            },
+            methods: {
+                createLink: function(p) {
+                  return '/pagination?page=' + p;
+                },
+                clickAlert: function() {
+                    this.showAlert = true;
+                    this.alertMsg.title = this.alertMsg.title + 1;
+                },
+                clickAlertOK: function() {
+                    this.showAlert = false;
+                },
+                clickConfirm: function() {
+                    this.showConfirm = true;
+                    this.confirmMsg.title = this.alertMsg.title + 1;
+                },
+                clickConfirmOK: function() {
+                    console.log('yeah');
+                    this.showConfirm = false;
+                },
+                clickConfirmCancel: function() {
+                    console.log('no');
+                    this.showConfirm = false;
+                },
+                clickDialog: function() {
+                    this.showDialog = true;
+                },
+                clickDialogOK: function() {
+                    this.showDialog = false;
+                    console.log('submit name:' + this.username)
+                },
+                clickDialogCancel: function() {
+                    this.showDialog = false;
+                    console.log('cancel')
+                },
+                myDateChange1(changedDate) {
+                    console.log(changedDate);
+                },
+
+                myDateChange2(changedDate) {
+                    console.log(changedDate);
+                }
+            },
+            filters: {
+                formatDate(_date, format) {
+                    // if (typeof date !== 'string' || typeof date !== 'number') {
+                    //   return _date;
+                    // }
+                    // var _date = new Date(_date);
+                    if (isNaN(_date.getTime())) {
+                        return '';
+                    }
+
+                    var map = {
+                            "M": _date.getMonth() + 1
+                        , "d": _date.getDate()
+                        , "h": _date.getHours()
+                        , "m": _date.getMinutes()
+                        , "s": _date.getSeconds()
+                    };
+
+                    format = format.replace(/([yMdDhms])+/g, function(all, t) {
+                        var v = map[t];
+                        if(v !== undefined){
+                            if(all.length > 1){
+                                v = '0' + v;
+                                v = v.substr(v.length - 2);
+                            }
+                            return v;
+                        } else if(t === 'y') {
+                            return (_date.getFullYear() + '').substr(4 - all.length);
+                        } else if (t === 'D') {
+                            return ['日', '一', '二', '三', '四', '五', '六'][_date.getDay()];
+                        }
+                        return all;
+                    });
+
+                    return format;
+                }
+            },
+        });
+    </script>
+
+</body>
+</html>
+

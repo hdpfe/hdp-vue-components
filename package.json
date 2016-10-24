@@ -1,0 +1,34 @@
+{
+  "name": "hdp-vue-components",
+  "version": "0.1.0",
+  "author": "plusice",
+  "description": "vue app components",
+  "main": "src/main.js",
+  "directories": {
+    "src": "src",
+    "example": "examples",
+    "doc": "doc"
+  },
+  "scripts": {
+    "dev": "webpack-dev-server --progress --inline --hot --config scripts/webpack.dev.js --content-base examples-dev/ --port 9997",
+    "build": "webpack --progress --config scripts/webpack.build.js"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.17.0",
+    "babel-loader": "^6.2.4",
+    "babel-plugin-transform-runtime": "^6.9.0",
+    "babel-preset-es2015": "^6.9.0",
+    "css-loader": "^0.23.1",
+    "vue": "^1.0.24",
+    "vue-hot-reload-api": "^1.3.2",
+    "vue-html-loader": "^1.2.2",
+    "vue-loader": "^8.4.0",
+    "vue-router": "^0.7.13",
+    "vue-style-loader": "^1.0.0",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1"
+  },
+  "peerDependencies": {},
+  "dependencies": {}
+}
