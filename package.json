@@ -3,15 +3,20 @@
   "version": "0.1.0",
   "author": "plusice",
   "description": "vue app components",
-  "main": "src/main.js",
+  "main": "dist/hdp-vue-components.js",
   "directories": {
     "src": "src",
     "example": "examples",
     "doc": "doc"
   },
   "scripts": {
-    "dev": "webpack-dev-server --progress --inline --hot --config scripts/webpack.dev.js --content-base examples-dev/ --port 9997",
+    "dev": "webpack-dev-server --progress --inline --hot --config scripts/webpack.dev.js --content-base examples-dev/ --port 9999",
+    "demo": "webpack --progress --config scripts/webpack.demo.js",
     "build": "webpack --progress --config scripts/webpack.build.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hdpfe/hdp-vue-components.git"
   },
   "license": "MIT",
   "devDependencies": {

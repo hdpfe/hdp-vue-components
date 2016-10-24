@@ -1,0 +1,69 @@
+<!doctype html>
+<html class="no-js fixed-layout" id="app-main">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>vue-components examples</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI">
+    <link rel="stylesheet" href="//cdn.amazeui.org/amazeui/2.4.2/css/amazeui.min.css">
+    <link rel="stylesheet" href=".//css/admin.css">
+</head>
+<body>
+    <header class="am-topbar am-topbar-inverse admin-header">
+        <div class="am-topbar-brand">
+            <strong>Amaze UI</strong> <small>vue-components examples</small>
+        </div>
+
+        <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only" data-am-collapse="{target: '#topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
+
+        <div class="am-collapse am-topbar-collapse" id="topbar-collapse">
+
+            <ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list">
+                <li><a href="javascript:;"><span class="am-icon-envelope-o"></span> 收件箱 <span class="am-badge am-badge-warning">5</span></a></li>
+                <li class="am-dropdown" data-am-dropdown>
+                    <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+                        <span class="am-icon-users"></span> 管理员 <span class="am-icon-caret-down"></span>
+                    </a>
+                    <ul class="am-dropdown-content">
+                        <li><a href="#"><span class="am-icon-user"></span> 资料</a></li>
+                        <li><a href="#"><span class="am-icon-cog"></span> 设置</a></li>
+                        <li><a href="#"><span class="am-icon-power-off"></span> 退出</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="am-cf admin-main">
+        <!-- sidebar start -->
+        <div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
+            <ul class="am-list admin-sidebar-list">
+                <li><a v-link="{path: '/'}"><span class="am-icon-home"></span> 首页</a></li>
+                <li><a v-link="{path: '/paginations'}">pagination</a></li>
+                <li><a v-link="{path: '/modals'}">modals</a></li>
+                <li><a v-link="{path: '/typaheads'}">typeAhead</a></li>
+                <li><a v-link="{path: '/taginputs'}">taginputs</a></li>
+                <li><a v-link="{path: '/datetimepickers'}">datetimepickers</a></li>
+            </ul>
+        </div>
+        <!-- sidebar end -->
+        <!-- content start -->
+        <div class="admin-content">
+            <div class="admin-content-body" style="padding: 20px;">
+                
+                <router-view></router-view>
+
+            </div>
+        </div>
+        <!-- content end -->
+    </div>
+
+    <script src="./app/vue.js"></script>
+    <script src="./app/app.js"></script>
+
+</body>
+</html>
+
