@@ -1,6 +1,6 @@
 {
   "name": "hdp-vue-components",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "plusice",
   "description": "vue app components",
   "main": "dist/hdp-vue-components.js",

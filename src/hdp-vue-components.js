@@ -1,3 +1,5 @@
-import hdpVueComponents from './main';
+var hdpVueComponents = require('./main');
 
 window.hdpVueComponents = hdpVueComponents;
+
+module.exports = hdpVueComponents;

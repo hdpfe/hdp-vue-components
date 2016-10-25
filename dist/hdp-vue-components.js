@@ -56,13 +56,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	var _main = __webpack_require__(1);
+	var hdpVueComponents = __webpack_require__(1);
 
-	var _main2 = _interopRequireDefault(_main);
+	window.hdpVueComponents = hdpVueComponents;
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	window.hdpVueComponents = _main2.default;
+	module.exports = hdpVueComponents;
 
 /***/ },
 /* 1 */
